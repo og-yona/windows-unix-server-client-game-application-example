@@ -133,8 +133,7 @@ bool Server::CreateTCPServer(int32_t portNumber)
 }
 
 bool Server::CreateSocket()
-{
-    static int retries = 0;        
+{    
     // Create the socket
 #ifdef _WIN32
     m_ServerSocket = socket(m_ConnectionInfo->ai_family, m_ConnectionInfo->ai_socktype, m_ConnectionInfo->ai_protocol);
@@ -148,7 +147,6 @@ bool Server::CreateSocket()
         printf("Error creating socket: %d - %s", m_Result, Error::GetErrorMsg(m_Result));
         return false;
     }
-    retries = 0;
     printf("Server Socket created\n");
     return true;
 }
@@ -177,7 +175,6 @@ bool Server::SetSocketNonBlocking()
 
 bool Server::BindSocket()
 {
-    static int retries = 0;
     // Bind the socket to a local address and port
 #ifdef _WIN32
     m_Result = bind(m_ServerSocket, m_ConnectionInfo->ai_addr, static_cast<int>(m_ConnectionInfo->ai_addrlen));
@@ -189,15 +186,12 @@ bool Server::BindSocket()
         printf("Binding socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         return false;
     }
-    retries = 0;
     printf("Server Socket Bound\n");
     return true;
 } 
 
 bool Server::ListenOnSocket()
 {
-    static int retries = 0;
-
     // Start listening for incoming connections
     m_Result = listen(m_ServerSocket, SOMAXCONN);
     if (m_Result)
@@ -205,7 +199,6 @@ bool Server::ListenOnSocket()
         printf("Listening on socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         return false;
     }
-    retries = 0;
     printf("Server Listening on Socket...\n");
     return true;
 }
