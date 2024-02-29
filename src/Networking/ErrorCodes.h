@@ -2,6 +2,7 @@
 #ifndef ERRORCODES_H
 #define ERRORCODES_H
 
+#include "NetworkCommons.h"
 #include <unordered_map>
 #include <string>
 
@@ -164,6 +165,10 @@ namespace Error
 	static const char* s_Unknown = "Unknown Error Code";
 	static const char* GetErrorMsg(int errorcode)
 	{
+		// If error code asked is still the basic "failed" code, ask for more accurate error code
+		if (errorcode < 0)
+			errorcode = GETERROR();
+
 		for (const auto& error : s_Errormap)
 		{
 			if (errorcode == error.first)
