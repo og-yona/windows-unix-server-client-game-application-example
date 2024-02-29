@@ -3,7 +3,6 @@
 #define SERVER_H
 
 #include "NetworkCommons.h"
-#include "NetworkException.h"
 #include "Packets.h"
 
 #include <map>
