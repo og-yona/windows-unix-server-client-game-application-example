@@ -44,6 +44,7 @@ bool Server::AcceptNewClient(uint32_t& id)
 
 uint32_t Server::ReceiveData(uint32_t client_id, char* recvbuf)
 {
+    // Verify that we are trying to get data for a valid client, then get the data.
     if (m_Sessions.find(client_id) != m_Sessions.end())
     {
         SOCKET currentSocket = m_Sessions[client_id];
@@ -62,6 +63,7 @@ void Server::SendToAll(char* packets, int totalSize)
 {
     SOCKET currentSocket;
 
+    // Go through all connected clients and send packet for them
     for (const auto& client : m_Sessions)
     {
         currentSocket = client.second;
@@ -71,8 +73,8 @@ void Server::SendToAll(char* packets, int totalSize)
             printf("send failed with error: %s \n", Error::GetErrorMsg(m_Result));
             CLOSESOCKET(currentSocket);
         }
-        printf("Server: Packet sent to clients\n");
     }
+    printf("Server: Packet sent to clients\n");
 }
 
 bool Server::CreateTCPServer(int32_t portNumber)
@@ -104,7 +106,7 @@ bool Server::CreateTCPServer(int32_t portNumber)
     // Set address info pointers / get addrinfo WSA  
     m_Result = getaddrinfo(NULL, DEFAULT_PORT, &m_AddressInfo, &m_ConnectionInfo);
     if (m_Result) {
-        printf("getaddrinfo failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
+        printf("GetAddrinfo failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         WSACleanup();
         return false;
     }
@@ -142,7 +144,6 @@ bool Server::CreateSocket()
     // Check for errors
     if (INVALIDSOCKET(m_ServerSocket))
     {
-        // Get the error code
         m_Result = GETERROR();
         printf("Error creating socket: %d - %s", m_Result, Error::GetErrorMsg(m_Result));
         return false;
@@ -158,8 +159,10 @@ bool Server::SetSocketNonBlocking()
 #ifdef _WIN32
     u_long blocking = 1;
     m_Result = ioctlsocket(m_ServerSocket, FIONBIO, &blocking);
+    // Check for errors
     if (m_Result == SOCKET_ERROR)
     {
+        m_Result = GETERROR();
         printf("ioctlsocket set mode failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         CLOSESOCKET(m_ServerSocket);
         return false;
@@ -183,7 +186,7 @@ bool Server::BindSocket()
 #endif
     if (m_Result)
     {
-        printf("binding socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
+        printf("Binding socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         return false;
     }
     retries = 0;
@@ -199,7 +202,7 @@ bool Server::ListenOnSocket()
     m_Result = listen(m_ServerSocket, SOMAXCONN);
     if (m_Result)
     {
-        printf("listening on socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
+        printf("Listening on socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
         return false;
     }
     retries = 0;

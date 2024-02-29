@@ -30,7 +30,7 @@ int main(int argc, char** argv[])
 	if (input == "c")
 		GameClient client = GameClient("127.0.0.1", 6881);
 
-	// STart server on own thread and connect on it with client.
+	// Start server on own thread and connect on it with client.
 	if (input == "s")
 	{
 		GameServer server;

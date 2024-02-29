@@ -1,7 +1,5 @@
 #include "GameServer.h"
 
-#include <iostream>
-
 uint32_t GameServer::m_ClientId;
 
 void GameServer::ServerLoop(int32_t portNumber)
