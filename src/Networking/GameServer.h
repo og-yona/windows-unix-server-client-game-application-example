@@ -12,7 +12,7 @@ public:
     GameServer() = default;
     ~GameServer() = default;
 
-    // Call Run to actually start the server, includes server game loop
+    // Call ServerLoop to actually start the GameServer
     void ServerLoop(int32_t portNumber = DEFAULT_PORT_INT);
 
     // Per frame update function
@@ -26,9 +26,9 @@ private:
     void SendPingPackets();
 
 private:        
-    static uint32_t m_ClientId; // IDs for the clients connecting for table in ServerNetwork         
-    Server* m_ServerNetwork; // The ServerNetwork object         
-    char m_DataBuffer[MAX_PACKET_SIZE]; // data buffer
+    static uint32_t m_ClientId;         // Current/next ID for the clients connecting for table in ServerNetwork         
+    Server* m_ServerNetwork;            // Actual TCP Server        
+    char m_DataBuffer[MAX_PACKET_SIZE]; // Data buffer
 };
 
 

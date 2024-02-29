@@ -11,10 +11,9 @@
 class Server
 {
 public:
-	// (de)Constructors
-    Server();
+	Server();
 	Server(int32_t portNumber);
-    ~Server();
+	~Server();
 
 	// Accept new connections
 	bool AcceptNewClient(uint32_t& id);
@@ -30,7 +29,9 @@ public:
 
 	// Returns state of server
 	bool IsConnected() { return m_IsConnected; }
+
 private:
+	// // // // // // // // // // // // 
 	// Private functions for creating the server socket and start listening it:
 
 	// Creates a server using the specified port number and server type
@@ -49,6 +50,7 @@ private:
 	bool ListenOnSocket();
 
 private:
+	// // // // // // // // // // // // 
 	// Private data variables
 
 	// Status of the server

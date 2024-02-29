@@ -5,7 +5,7 @@
 
 #include <memory.h>
 #include <stdint.h>
-#include <stdio.h> // standard input and output library
+#include <stdio.h>
 
 #ifdef _WIN32
 	#include <WinSock2.h>

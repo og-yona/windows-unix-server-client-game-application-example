@@ -2,11 +2,11 @@
 #ifndef PACKET_H
 #define PACKET_H
 
-#include <stdio.h> // standard input and output library
+#include <stdio.h>
 #include <stdint.h>
 #include <memory.h>
 
-#define MAX_PACKET_SIZE 1024//1000000
+#define MAX_PACKET_SIZE 1024 // 1000000
 
 enum PacketTypes {
     INIT_CONNECTION = 0,

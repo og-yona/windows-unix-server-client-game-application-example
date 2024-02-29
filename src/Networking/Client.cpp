@@ -24,7 +24,9 @@ void Client::ConnectTCPServer(char* host, int32_t portNumber)
         return;
 
     if (!ConnectToSocket())
-        return;          
+        return;
+
+    printf("Client connected to the server \n");
 }
 
 bool Client::WSAInit()
@@ -32,7 +34,6 @@ bool Client::WSAInit()
 #ifdef _WIN32
     // Initialize the Windows Sockets DLL
     m_Result = WSAStartup(VERSIONREQUESTED, &m_WsaData);
-    // If there was an error, throw an exception
     if (m_Result)
     {
         printf("WSAStartup failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
@@ -72,7 +73,7 @@ bool Client::CreateTCPSocket(char* host, int32_t portNumber)
     if (INVALIDSOCKET(m_ConnectionSocket))
     {
         m_Result = GETERROR();
-        printf("Get the address info failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
+        printf("Creating socket failed with error: %d - %s \n", m_Result, Error::GetErrorMsg(m_Result));
 #ifdef _WIN32
         WSACleanup();
 #endif
@@ -80,6 +81,7 @@ bool Client::CreateTCPSocket(char* host, int32_t portNumber)
     }
 
     // Return true when socket was created successfully
+    printf("Client socket created. \n");
     return true;
 
 } 
@@ -113,6 +115,7 @@ bool Client::ConnectToSocket()
     }
 
     // Return true if the connection was successful
+    printf("Client connection established. \n");
     m_ClientConnected = true;
     return true;
 }

@@ -61,11 +61,10 @@ uint32_t Server::ReceiveData(uint32_t client_id, char* recvbuf)
 void Server::SendToAll(char* packets, int totalSize)
 {
     SOCKET currentSocket;
-    std::map<uint32_t, SOCKET>::iterator iter;
 
-    for (iter = m_Sessions.begin(); iter != m_Sessions.end(); iter++)
+    for (const auto& client : m_Sessions)
     {
-        currentSocket = iter->second;
+        currentSocket = client.second;
         m_Result = Network::sendPack(currentSocket, packets, totalSize);
         if (m_Result == SOCKET_ERROR)
         {

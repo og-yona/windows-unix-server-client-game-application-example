@@ -16,10 +16,13 @@ public:
 	void ClientLoop();
 	void OnUpdate();
 
+	// Actual TCP client socket and packet data buffer:
 	Client* m_ClientNetwork;
 	char m_DataBuffer[MAX_PACKET_SIZE];
 
 private:
+	// // // // // // // // // // // // 
+	// Private functions for connecting to the server and sending ping packets
 	void SendPingPacket();
 	void ConnectTo(char* host, int32_t portNumber);
 };

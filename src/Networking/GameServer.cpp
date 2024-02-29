@@ -6,15 +6,15 @@ uint32_t GameServer::m_ClientId;
 
 void GameServer::ServerLoop(int32_t portNumber)
 {
-    // connection id's to assign clients for our table
+    // Connection id's to assign clients for our table
     m_ClientId = 0;
 
-    // set up the server network to listen 
+    // Set up the server network to listen 
     m_ServerNetwork = new Server(portNumber);
 
-    // do other game server init stuff
+    // Do other game server init stuff
 
-    // game server loop:
+    // Game server loop:
     while (m_ServerNetwork->IsConnected())
     {
         OnUpdate();
@@ -77,7 +77,7 @@ void GameServer::ReceiveFromClients()
 
 void GameServer::SendPingPackets()
 {
-    // send ping packet
+    // Send ping packet
     const unsigned int packet_size = sizeof(Packet);
     char packet_data[packet_size];
 
