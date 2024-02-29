@@ -1,0 +1,17 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+**.bak
+**.*.bak
+**.sln
+**.v*proj
+**.v*.*
+**.filters
+CMakeFiles/
+CMakeCache.txt
+CMakeDox**.**
+cmake_install.cmake
+build/
